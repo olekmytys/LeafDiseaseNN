@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+
+# Jupyter
+*.ipynb
+.ipynb_checkpoints/
+
+# Model weights
+*.pth
+*.pt
+
+# Datasets
+liscie_crop/
+Potato Leaf Disease Dataset in Uncontrolled Environment/
