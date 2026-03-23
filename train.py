@@ -9,7 +9,7 @@ MODEL_SAVE = 'model.pth'
 EPOCHS = 20
 BATCH_SIZE = 32
 LAERNING_RATE = 0.001
-DEVICE = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu" #torch.DEVICE("cuda" if torch.cuda.is_available() else "cpu")
+DEVICE = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
 
 model = LeafCNN().to(DEVICE)
 criterion = nn.CrossEntropyLoss()
