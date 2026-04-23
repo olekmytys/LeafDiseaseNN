@@ -1,36 +1,34 @@
 import torch.nn as nn
+import torch.nn.functional as F
 
 class LeafCNN(nn.Module):
-
-    def __init__(self):
+    def __init__(self, num_classes=7):
         super().__init__()
 
-        self.conv_blocks = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=32, kernel_size=3),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=3),
+        self.conv1 = nn.Conv2d(3, 32, 3, padding=1)
+        self.bn1   = nn.BatchNorm2d(32)
 
+        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
+        self.bn2   = nn.BatchNorm2d(64)
 
-            nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=3),
+        self.conv3 = nn.Conv2d(64, 128, 3, padding=1)
+        self.bn3   = nn.BatchNorm2d(128)
 
+        self.pool  = nn.MaxPool2d(2, 2)
 
-            nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=3),
-        )
+        self.gap   = nn.AdaptiveAvgPool2d(1)
 
-
-        self.classifier = nn.Sequential(
-            nn.Flatten(),
-            nn.Linear(25088, 256),
-            nn.ReLU(),
-            nn.Dropout(p=0.5),
-            nn.Linear(256, 7),
-        )
+        self.fc1     = nn.Linear(128, 128)
+        self.dropout = nn.Dropout(p=0.3)
+        self.fc2     = nn.Linear(128, num_classes)
 
     def forward(self, x):
-        x = self.conv_blocks(x)
-        x = self.classifier(x)
+        x = self.pool(F.relu(self.bn1(self.conv1(x))))
+        x = self.pool(F.relu(self.bn2(self.conv2(x))))
+        x = self.pool(F.relu(self.bn3(self.conv3(x))))
+        x = self.gap(x)
+        x = x.view(x.size(0), -1)
+        x = F.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = self.fc2(x)
         return x

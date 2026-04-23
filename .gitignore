@@ -1,4 +1,5 @@
 # Python
+env/
 __pycache__/
 *.py[cod]
 *.pyo
@@ -10,8 +11,17 @@ __pycache__/
 
 # Model weights
 *.pth
-*.pt
 
-# Datasets
+# Folders
 liscie_crop/
 Potato Leaf Disease Dataset in Uncontrolled Environment/
+Potato Leaf DIsease/
+ol/
+logs/
+
+#temp
+benchmark.py
+s.py
+sal.py
+a.py
+
