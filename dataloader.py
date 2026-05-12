@@ -4,7 +4,7 @@ from torchvision.transforms import v2
 from dataset import *
 
 transform = v2.Compose([
-    v2.Resize((256, 256)), #resize
+    #v2.Resize((256, 256)), #resize
     v2.RandomHorizontalFlip(0.5),
     v2.RandomRotation(30),
     v2.ColorJitter(
@@ -27,4 +27,5 @@ train_dataset, validation_dataset = random_split(dataset, [train_size, validatio
 
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 validation_loader = DataLoader(validation_dataset, batch_size=32, shuffle=False)
-class_names = dataset.class_names
+class_names = dataset.class_names #["Unhealthy", "Healthy"]  
+#print("Folders found:", dataset.class_names)

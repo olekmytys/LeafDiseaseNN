@@ -7,6 +7,7 @@ import numpy as np
 import torch
 
 class ImageDataset(Dataset):
+    HEALTHY = {'Healthy'}
     def __init__(self, dir, transform=None):
         self.root = dir
         self.transform=transform
@@ -19,7 +20,7 @@ class ImageDataset(Dataset):
             for f in os.listdir(class_dir):
                 if f.lower().endswith((".jpg", ".png", ".jpeg", ".bmp", ".webp")):
                     path = os.path.join(class_dir, f)
-                    label = self.class_to_idx[class_name]
+                    label = self.class_to_idx[class_name] #1 if class_name in self.HEALTHY else 0  
                     self.img_labels.append((path, label))
 
     def __len__(self):
