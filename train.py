@@ -12,7 +12,7 @@ import torch.nn.utils.prune as prune
 MODEL_SAVE    = 'model.pth'
 EPOCHS        = 100
 LEARNING_RATE = 0.0005
-NUM_CLASSES   = 2
+NUM_CLASSES   = 7
 DEVICE        = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
 # ─────────────────────────────────────────────────────────────────────────────
 
